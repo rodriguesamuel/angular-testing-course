@@ -1,9 +1,9 @@
 import {CoursesService} from "./courses.service";
 import {TestBed} from "@angular/core/testing";
 import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
-import {COURSES} from "../../../../server/db-data";
+import {COURSES} from '../../../../server/db-data';
 
-describe("CoursesService", () => {
+fdescribe('CoursesService', () => {
   let coursesService: CoursesService,
     httpTestingController: HttpTestingController;
 
@@ -18,10 +18,10 @@ describe("CoursesService", () => {
       ]
     })
 
-    coursesService = TestBed.inject(CoursesService);
-    httpTestingController = TestBed.inject(HttpTestingController);
+    coursesService = TestBed.get(CoursesService);
+    httpTestingController = TestBed.get(HttpTestingController);
 
-  })
+  });
 
   it('should retrieve all courses', () => {
 
@@ -31,18 +31,25 @@ describe("CoursesService", () => {
 
         expect(courses).toBeTruthy('No courses returned');
 
-        expect(courses.length).toBe(12, "incorrect number of courses");
+        expect(courses.length).toBe(12, 'incorrect number of courses');
 
         const course = courses.find(course => course.id == 12);
 
-        expect(course.titles.description).toBe("Angular Testing Course");
+        expect(course.titles.description).toBe('Angular Testing Course');
 
       });
 
     const req = httpTestingController.expectOne('/api/courses');
 
-    expect(req.request.method).toEqual("GET");
+    expect(req.request.method).toEqual('GET');
 
     req.flush({payLoad: Object.values(COURSES)});
-  })
-})
+  });
+
+  afterEach(() => {
+
+    httpTestingController.verify();
+  });
+
+
+});
