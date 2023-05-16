@@ -42,6 +42,8 @@ describe('CoursesCardListComponent', () => {
 
     component.courses = setupCourses();
 
+    fixture.detectChanges();
+
     const cards = el.queryAll(By.css(".course-card"));
 
     expect(cards).toBeTruthy();
